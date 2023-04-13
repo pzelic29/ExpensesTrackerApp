@@ -1,5 +1,5 @@
-import {Text} from 'react-native';
+import Expenses from '../components/Expenses/Expenses';
 function AllExpenses(){
-  return <Text>All Expenses</Text>
+  return <Expenses periodName="Last 7 days"/>
 }
 export default AllExpenses;
