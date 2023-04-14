@@ -7,13 +7,19 @@ import {Ionicons} from '@expo/vector-icons';
 import AllExpenses from "./screens/AllExpenses";
 import ManageExpense from "./screens/ManageExpenses";
 import RecentExpenses from "./screens/RecentExpenses";
+import ButtonIcon from "./components/UI/ButtonIcon";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpensesOverview() {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator
+    screenOptions={{
+      headerRight: () => <ButtonIcon icon="add" size={24} color='black' onPress={() =>{}}/>
+    
+    }}
+    >
       <BottomTabs.Screen 
       name="RecentExpenses" 
       component={RecentExpenses} 
