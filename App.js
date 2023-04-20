@@ -8,6 +8,7 @@ import AllExpenses from "./screens/AllExpenses";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import ButtonIcon from "./components/UI/ButtonIcon";
+import ExpensesContextProvider from "./store/store";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -58,6 +59,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
+      <ExpensesContextProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -68,6 +70,7 @@ export default function App() {
           <Stack.Screen name="ManageExpense" component={ManageExpense} />
         </Stack.Navigator>
       </NavigationContainer>
+      </ExpensesContextProvider>
     </>
   );
 }
