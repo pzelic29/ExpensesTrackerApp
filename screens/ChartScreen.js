@@ -15,34 +15,35 @@ const ChartScreen = () => {
   const data = Object.keys(expensesByCategory).map((category) => ({
     name: category,
     value: expensesByCategory[category],
-    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Random color for each category
+    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
   }));
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Expenses By Category</Text>
-      <View>
       <PieChart
         data={data}
-        width={200}
-        height={200}
+        width={300}
+        height={300}
         chartConfig={{
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            legend: {
-              enabled: true,
-              textSize: 14,
-              textColor: "#555",
-              iconSize: 14,
-              iconColor: "#555",
-              fontFamily: "Arial",
-            },
+          backgroundGradientFrom: "#1E2923",
+          backgroundGradientTo: "#08130D",
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         }}
+        hasLegend={false}
         accessor={"value"}
         backgroundColor={"transparent"}
         paddingLeft={"15"}
         center={[10, 10]}
       />
+      <View style={styles.legendContainer}>
+        <Text style={styles.legendTitle}>Legend</Text>
+        {data.map((item, index) => (
+          <View style={styles.legendItem} key={index}>
+            <View style={[styles.legendColor, { backgroundColor: item.color }]} />
+            <Text style={styles.legendText}>{item.name} - {item.value}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -55,10 +56,32 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#80ced6",
   },
-  title: {
-    fontSize: 24,
+  legendContainer: {
+    flexDirection: "column",
+    marginTop: 30,
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#555",
+  },
+  legendTitle: {
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 5,
+  },
+  legendColor: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  legendText: {
+    fontSize: 16,
   },
 });
 

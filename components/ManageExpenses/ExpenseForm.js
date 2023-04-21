@@ -4,15 +4,13 @@ import SelectedListComponent from "./SelectedListComponent";
 import Input from "./Input";
 import Button from "../UI/Button";
 
-function ExpenseForm({submitButtonLabel,onCancel, onSubmit, defaultValues, categoryDefault}) {
+function ExpenseForm({submitButtonLabel,onCancel, onSubmit, defaultValues}) {
   const [inputValues, setInputValues] = useState({
     amount: defaultValues ? defaultValues.amount.toString() : "",
     date: defaultValues ? defaultValues.date.toISOString().slice(0,10) : "",
     description: defaultValues ? defaultValues.description : "",
-    category: categoryDefault || "",
+    category: defaultValues ? defaultValues.category : "",
   });
-  
-
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputValues((curInputValues) => {
