@@ -4,10 +4,21 @@ import ExpenseForm from "../components/ManageExpenses/ExpenseForm";
 import ButtonIcon from "../components/UI/ButtonIcon";
 import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/store";
+
+
+function getCategory(expenseId, expenses) {
+  const selectedExpense = expenses.find((expense) => expense.id === expenseId);
+  return selectedExpense.category;
+}
+
 function ManageExpense({ route, navigation }) {
   const expensesCtx = useContext(ExpensesContext);
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
+
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,19 +35,26 @@ function ManageExpense({ route, navigation }) {
   }
   function confirmHandler(expenseData) {
     if (isEditing) {
-      expensesCtx.updateExpense(editedExpenseId,expenseData);
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
       expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
   }
 
+  const category = editedExpenseId
+  ? getCategory(editedExpenseId, expensesCtx.expenses)
+  : "";
+  console.log(category);
+
   return (
     <View style={styles.container}>
       <ExpenseForm
-        submitButtonLabel={isEditing ? 'Update' : 'Add'}
+        submitButtonLabel={isEditing ? "Update" : "Add"}
         onSubmit={confirmHandler}
         onCancel={cancelHandler}
+        defaultValues={selectedExpense}
+        categoryDefault={category}
       />
       {isEditing && (
         <View style={styles.deleteContainer}>

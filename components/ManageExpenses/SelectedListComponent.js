@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-function SelectedListComponent({ label, onSelectedChange }) {
+function SelectedListComponent({ label, onSelectedChange,category }) {
   const [selected, setValueSelected] = React.useState('');
 
   const data = [
@@ -30,7 +30,8 @@ function SelectedListComponent({ label, onSelectedChange }) {
         dropdownStyles={{ backgroundColor: 'white' }}
         dropdownItemStyles={{ marginHorizontal: 10 }}
         dropdownTextStyles={{ color: 'black' }}
-        placeholder="Select category"
+        placeholder={category}
+        defaultOption={{}} 
         maxHeight={100}
       />
     </View>
