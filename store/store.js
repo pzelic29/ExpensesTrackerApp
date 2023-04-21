@@ -40,7 +40,7 @@ const DUMMY_EXPENSES = [
       description: "Stol",
       category: "Housing",
       amount: 200.0,
-      date: new Date("2022-02-18"),
+      date: new Date("2023-04-21"),
     },
   ];
 

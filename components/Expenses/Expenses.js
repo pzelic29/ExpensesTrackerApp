@@ -1,7 +1,6 @@
 import { View,Text, StyleSheet } from "react-native";
-import ExpensesSummary from "./ExpensesSummary";
 import ExpensesList from "./ExpensesList";
-
+import ExpensesSummary from "./ExpensesSummary";
 function Expenses({ expenses, expensesPeriod, fallbackText }) {
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
 

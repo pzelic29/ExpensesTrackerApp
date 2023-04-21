@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AllExpenses from "./screens/AllExpenses";
 import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
+import ChartScreen from "./screens/ChartScreen";
 import ButtonIcon from "./components/UI/ButtonIcon";
 import ExpensesContextProvider from "./store/store";
 
@@ -51,6 +52,17 @@ function ExpensesOverview() {
           ),
         }}
       />
+      <BottomTabs.Screen
+        name="ChartScreen"
+        component={ChartScreen}
+        options={{
+          title: "Chart",
+          tabBarLabel: "Chart",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="pie-chart-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </BottomTabs.Navigator>
   );
 }
@@ -60,16 +72,17 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <ExpensesContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="ExpensesOverview"
-            component={ExpensesOverview}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="ManageExpense" component={ManageExpense} />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="ExpensesOverview"
+              component={ExpensesOverview}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="ManageExpense" component={ManageExpense} />
+            <Stack.Screen name="ChartScreen" component={ChartScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </ExpensesContextProvider>
     </>
   );

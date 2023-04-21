@@ -1,9 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native';
-import Input from './Input';
-import SelectedListComponent from './SelectedListComponent';
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import SelectedListComponent from "./SelectedListComponent";
+import Input from "./Input";
+import Button from "../UI/Button";
 
-function ExpenseForm() {
-  function amountChangedHandler() {}
+function ExpenseForm({submitButtonLabel,onCancel, onSubmit}) {
+  const [inputValues, setInputValues] = useState({
+    amount: "",
+    date: "",
+    description: "",
+    category: "",
+  });
+
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputValues((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
+  function submitHandler (){
+    const expenseData ={
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+      category: inputValues.category,
+    };
+    onSubmit(expenseData)
+  }
 
   return (
     <View style={styles.form}>
@@ -12,17 +37,19 @@ function ExpenseForm() {
           style={styles.rowInput}
           label="Amount"
           textInputConfig={{
-            keyboardType: 'decimal-pad',
-            onChangeText: amountChangedHandler,
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangedHandler.bind(this, "amount"),
+            value: inputValues.amount,
           }}
         />
         <Input
           style={styles.rowInput}
           label="Date"
           textInputConfig={{
-            placeholder: 'YYYY-MM-DD',
+            placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: () => {},
+            onChangeText: inputChangedHandler.bind(this, "date"),
+            value: inputValues.date,
           }}
         />
       <Input
@@ -31,31 +58,56 @@ function ExpenseForm() {
           multiline: true,
           // autoCapitalize: 'none'
           // autoCorrect: false // default is true
+          onChangeText: inputChangedHandler.bind(this, "description"),
+          value: inputValues.description,
         }}
       />
-      <SelectedListComponent label="Category" />
+       <SelectedListComponent
+        label="Category"
+        onSelectedChange={(category) => {
+          setInputValues((prevState) => ({
+            ...prevState,
+            category: category,
+          }));
+        }}
+      />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={submitHandler}>
+          {submitButtonLabel}
+        </Button>
+      </View>
     </View>
   );
 }
-
 export default ExpenseForm;
-
 const styles = StyleSheet.create({
   form: {
     marginTop: 40,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
+    fontWeight: "bold",
+    color: "black",
     marginVertical: 24,
-    textAlign: 'center'
+    textAlign: "center",
   },
   inputsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   rowInput: {
     flex: 1,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });
